@@ -1,0 +1,59 @@
+#Number Guessing Game.
+import random #imports the random module needed to generate a random number.
+play_again=="yes" #You set the variable play again automatically to yes.
+while play_again=="yes": 
+#you need to wrap the whole game in this while loop, so that while the player wants to play, the game restarts.
+    print("Welcome to the Number Guessing Game!") #Welcome Message
+    number_of_tries=int(input("Please input the number of tries you want to have for this game: "))
+    #Allows you to select the number of tries you want to have for the game.
+    count=1 #Counter. This will start off the number of tries.
+    random_number=random.randint(1,10) #Generates a random number between one and ten.
+    guess=int(input("Think of a number between 1 and 10: ")) #Allows the player to input a guess.
+    close1=random_number - 1 #Variable for when the guess is within one number from the random one (less)
+    close2=random_number + 1 #Variable for when the guess is within one number from the random one (more)
+    while count < number_of_tries: #while the number of guess is less than four.
+        if guess==random_number:
+            print("Congratulations, you have guessed correctly!") 
+            #if you guess the number within the four tries you're given, you win.
+            if count>1:
+                print("It took you", count, "tries to guess the correct number.")
+            else: 
+                print("It took you", count, "try to guess the correct number.")
+            break #the break makes sure that the loop doesn't go on forever, bringing you to "do you want to play again?"
+        elif random_number != guess: #if the number you choose is not like the random-number.
+            if guess==-1: 
+            #This is a cheat. It gives you the number generated and the chance to guess that number withou counting it as a try.
+                print("The number you need to guess is: ", random_number)
+                guess=int(input("Please guess again: "))
+                continue 
+                #continue ends this portion of the loop. If you put the right number, you go back up, otherwise you go to the 
+                #next loop.
+            elif random_number > guess:
+                count+=1
+                print("Sorry! The number is actually higher than your guess.")
+                if guess==close1:
+                    print("The number you guessed is actually off by one!")
+                elif guess==close2:
+                    print("The number you guessed is actually off by one!")
+                print("You have",(number_of_tries+1)-count,"tries left.") 
+                #Subtracts the number of tries you're given from the tries you've used.
+                guess=int(input("Please guess again: "))
+            elif random_number < guess:
+                count+=1
+                print("Sorry! The number is actually lower than your guess.")
+                if guess==close1:
+                    print("The number you guessed is actually off by one!")
+                elif guess==close2:
+                    print("The number you guessed is actually off by one!")
+                print("You have",(number_of_tries+1)-count,"tries left.")
+            guess=int(input("Please guess again: "))
+    if count == number_of_tries and guess==random_number:
+        #If you reach the max amount of tries and guess the number, you win.
+        print("Congratulations, you have guessed correctly! It took you ", count, " tries to guess the correct number.")
+    elif count== number_of_tries and guess != random_number:
+        #If you reach the max amount of tries and HAVE NOT guessed the number, you lose and are given the right number.
+        print("You've run out of attempts. You lost! The correct number was:",random_number,".")
+    if input("Do you want another round? (yes/no)").lower() != "yes":
+        break 
+        #If you choose not to continue the game, you break the loop (as play again is not yes), and "Game Over" is printed.
+print("Game Over")
