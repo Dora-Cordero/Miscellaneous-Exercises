@@ -1,0 +1,38 @@
+play_again="yes"
+while play_again=="yes":
+    random_number= random.randint(1000,9999)
+    cow=0
+    bull=0
+    tries=1
+    split_number=[]
+    for x in str(random_number):
+        split_number.append(x)
+    guess=input("Please guess a 4-digit number between 1000 and 9999: ")
+    while len(guess)!=4:
+        guess=input("The number has to have 4 digits. Please try again: ")
+    split_guess=[]
+    for x in str(guess):
+        split_guess.append(x)
+
+    while split_number != split_guess:
+        for x in split_number:
+            if x in split_guess:
+                cow+=1
+            else:
+                bull+=1
+        tries+=1
+        print("You have", cow, "cows and", bull, "bulls.")
+        guess=input("Please guess a 4-digit number between 1000 and 9999: ")
+        while len(guess)!=4:
+            guess=input("The number has to have 4 digits. Please try again: ")
+        split_guess=[]
+        for x in str(guess):
+            split_guess.append(x)
+        cow=0
+        bull=0
+    if split_number==split_guess:
+        print("Congrats you have won! It has taken you", tries, "tries to win the game.")
+        play_again=input("Do you want to play again? (yes/no) ").lower()
+        if play_again!="yes":
+            print("Game Over. Thanks for playing!")
+            break
