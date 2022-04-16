@@ -1,0 +1,45 @@
+"""
+When writing out a list of items in English, one normally separates the items with
+commas. In addition, the word “and” is normally included before the last item, unless
+the list only contains one item. Consider the following four lists:
+                                        apples
+                                        apples and oranges
+                                        apples, oranges and bananas
+                                        apples, oranges, bananas and lemons
+Write a function that takes a list of strings as its only parameter. Your function
+should return a string that contains all of the items in the list formatted in the manner
+described previously as its only result. Include a main program that reads several items from the user,formats them by calling 
+your function, and then displays the result returned by the function."""
+
+words = input("Please enter an item: ")
+def english_list_maker(words):
+    word_list1 = []
+    word_list1.append(words)
+
+    while words != " ":
+        words = input("Please enter an item (blank to quick): ")
+        if words != " ":
+            word_list1.append(words)
+   
+    word_list =[]
+
+    if len(word_list1) == 1:
+        print(word_list1)
+    elif len(word_list1) == 2:
+        for x in word_list1:
+            word_list.append(x)
+            if x != word_list1[-1]:
+                word_list.append(" and ")
+    elif len(word_list1) >= 3:
+        for x in word_list1:
+            word_list.append(x)
+            if x != word_list1[-2] and x != word_list1[-1] :
+                word_list.append(", ")
+            elif x == word_list1[-2]:
+                word_list.append(" and ")
+
+    new_string = " "
+    for i in word_list:
+        new_string = new_string + i
+    return new_string
+print(english_list_maker(words))
