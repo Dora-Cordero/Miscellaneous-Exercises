@@ -1,0 +1,36 @@
+#Shuffling a Deck of Cards:
+
+def createDeck(): #Creates a deck of 52 cards.
+    deck = []
+    for suit in ['♠','♥','♦','♣']:
+        for card in [str(num) for num in range(2,10)] + ["T","J","Q","K","A"]:
+            deck.append(card + suit)
+    return deck
+
+def shuffle_deck(): #Shuffles the deck of cards.
+    deck = createDeck()
+    choice = random.choice(deck)
+    shuffled_cards = []
+    while len(shuffled_cards) != 52:
+        choice = random.choice(deck)
+        shuffled_cards.append(choice)
+        deck.remove(choice)
+    return shuffled_cards
+
+print(f"Before shuffling:{createDeck()}\n\n",end= "")
+print(f"After shuffling:{shuffle_deck()}",end= "")
+
+#Card Dealer
+def card_dealer(num_hands,hands_size,deck): #Uses the previous functions to shuffle a deck of cards and deal it to players.
+    deck = shuffle()
+    cards_passed = []
+    hand_count = 0
+    for i in range(1,hands_size):
+        hand = []
+        for i in range(0,hands+1):
+            choice = random.choice(deck)
+            hand.append(choice)
+            deck.remove(choice)
+        cards_passed.append(hand)
+        hand_count +=1
+        print(f"Hand number {hand_count}: {hand}")
