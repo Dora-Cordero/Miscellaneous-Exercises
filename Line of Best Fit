@@ -12,48 +12,30 @@ by replacing m and b with the values you calculated using the preceding formulas
 For example, if the user inputs the coordinates (1, 1), (2, 2.1) and (3, 2.9) then your
 program should display y = 0.95x + 01. """
 
-import math
+x_coord = float(input("Enter the first x-coordinate: "))
+y_coord = float(input("Enter the first y-coordinate: "))
+x_coords = [x_coord]
+y_coords = [y_coord]
 
-x_values = []
-y_values = []
-x = input("Please input an x-coordinate: ")
-x = float(x)
-x_values.append(x)
-y = input("Please input a y-coordinate: ")
-y = float(y)
-y_values.append(y)
+while x_coord != " ":
+    x_coord = input("Enter the next x-coordinate (blank to quit): ")
+    if x_coord != " ":
+        x_coords.append(float(x_coord))
+        y_coord = float(input("Enter the next y-coordinate: "))
+        y_coords.append(y_coord)
+    else:
+        break
 
-while x != " ":
-        x = input("Please input an x-coordinate (blank to quit): ")
-        if x != " ":
-            x = float(x)
-            x_values.append(x)
-            y = input("Please input a y-coordinate: ")
-            y = float(y)
-            y_values.append(y)
+def slope(x_coords,y_coords):
+    coordinates = list(zip(x_coords,y_coords))
+    numerator = sum([x * y for x,y in coordinates]) - ((sum(x_coords)*sum(y_coords)) / len(coordinates))
+    denominator = sum([x**2 for x in x_coords]) - ((sum(x_coords)**2)/len(coordinates))
+    return round(numerator/denominator,2)
 
-def slope(x_values,y_values):
-    sum_xy = []
-    for i in range(0,len(x_values)):
-        z = x_values[i] * y_values[i]
-        sum_xy.append(z)
+def y_intercept(x_coords,y_coords):
+    return round((sum(y_coords)/len(y_coords)) - (slope(x_coords,y_coords) * (sum(x_coords)/len(x_coords))),2)
 
-    sum_xy = math.fsum(sum_xy)
-    numerator = sum_xy - ((math.fsum(x_values) * math.fsum(y_values))/len(x_values))
-    x_values_squared = []
-    for x in x_values:
-        x = x**2
-        x_values_squared.append(x)
-    denominator = math.fsum(x_values_squared) - ((math.fsum(x_values)**2)/len(x_values))
-    m = round(numerator / denominator,2)
-    return m
-
-def line_of_best_fit(m,x_values,y_values):
-    average_y = round(math.fsum(y_values)/len(y_values),2)
-    average_x = round(math.fsum(x_values)/len(x_values),2)
-    b = round(average_y - ((slope(x_values,y_values)) * average_x),2)
-    line = f"y = {slope(x_values,y_values)}x + {b}"
-    return line
-
-print(line_of_best_fit(m,x_values,y_values))
-        
+if y_intercept(x_coords,y_coords) >= 0:
+    print(f"The line of best fit is: y = {slope(x_coords,y_coords)}x + {y_intercept(x_coords,y_coords)}")
+else:
+    print(f"The line of best fit is: y = {slope(x_coords,y_coords)}x {y_intercept(x_coords,y_coords)}")
