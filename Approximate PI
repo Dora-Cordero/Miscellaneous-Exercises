@@ -39,3 +39,24 @@ for i in range(0,num_approx-1):
     #a positive term, whilst if it's odd, we append a negative term.
 pi_approximation=math.fsum(pi) #we then use fsum to add together all the terms (floats) appended in pi.
 print(num_approx,"approximations of pi are equal to:",round(pi_approximation,4)) #finally we display the output to the user.
+
+                                                                #Updated Version:
+num_approximations = int(input("Please enter the number of approximations of pi that you want: "))
+
+def approximate_pi(num_approximations):
+    approximations = [3]
+    denominator_vals = [2,3,4]
+    approximation = 1
+    denominator = 0
+    for x in range(1,num_approximations+1):
+        print(f"Approximation # {approximation}: {sum(approximations)}")
+        approximation +=1
+        denominator = denominator_vals[0] * denominator_vals[1] * denominator_vals[2]
+        if approximation % 2 == 0:
+            approximations.append(4/denominator)
+            denominator_vals = [denominator_vals[-1], (denominator_vals[-1] +1), (denominator_vals[-1] + 2)]
+        elif approximation % 2 != 0:
+            approximations.append(-4/denominator)
+            denominator_vals = [denominator_vals[-1], (denominator_vals[-1] +1), (denominator_vals[-1] + 2)]
+
+approximate_pi(num_approximations)
