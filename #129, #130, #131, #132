@@ -76,6 +76,23 @@ def infix_to_postfix(infix):
             postfix.remove(postfix[index])       
     return postfix
 
+#Exercise #132: Evaluating to postfix
+
+def postfix_evaluator(postfix):
+    values = []
+    for token in postfix:
+        if token.isdigit() == True:
+            token = int(token)
+            values.append(token)
+        elif token =="u-":
+            item = values.pop()
+            values.append(-item)
+        elif token in ")+-/^*(":
+            right = values.pop()
+            left = values.pop()
+            values.append(left + right)
+    return values
+
 #Testing each function starting with a mathematical expression inputted by a user:
 string = input("Enter a mathematical expression you want tokenized: ")
 tokens = expression_tokenizer(string)
@@ -84,3 +101,5 @@ infix = unary_operators(tokens)
 print(infix)
 postfix = infix_to_postfix(infix)
 print(postfix)
+original = postfix_evaluator(postfix)
+print(original)
