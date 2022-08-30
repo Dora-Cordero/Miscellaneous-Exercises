@@ -1,0 +1,34 @@
+#Exercise #138: Text Messaging
+""" Reference table (adjustable):
+Key  Symbols
+1    .,?!:
+2     ABC
+3     DEF
+4     GHI
+5     JKL
+6     MNO
+7    PQRS
+8     TUV
+9    WXYZ
+0    space """
+
+def old_cellphone(sentence):
+    symbols = [[".",",","?","!",":"],["A","B","C"],["D","E","F"],["G","H","I"],["J","K","L"],["M","N","O"],
+               ["P","Q","R","S"],["T","U","V"],["W","X","Y","Z"],[" "]]
+    
+    key_press = {}
+    key = 0
+    
+    for group in symbols:
+        key+=1
+        for index, symbol in enumerate(group):
+            key_press[symbol] = str(key)*(index+1)
+    
+    output = ""
+    
+    for letter in sentence.upper():
+        output += key_press[letter]
+    return output
+
+sentence= input("Please enter the sentence you want converted into key presses: ")
+old_cellphone(sentence)
