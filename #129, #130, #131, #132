@@ -1,0 +1,86 @@
+#Put these four exercises together because they build on each other.
+
+#Exercise 129: Tokenizing a String
+
+def expression_tokenizer(string):
+    number = ""
+    tokens = []
+    for index, value in enumerate(string):
+        if string[index] in [str(num) for num in range(0,10)]:
+            number += value
+        elif string[index] in ")+-/^*(":
+            if number != "":
+                tokens.append(number)           
+                tokens.append(value)
+            else:
+                tokens.append(value)
+            number=""
+    if number !="":
+        tokens.append(number)
+    return tokens
+    
+#Exercise 130: Unary and Binary operators
+
+string = input("Enter a mathematical expression you want tokenized: ")
+string = string.replace(" ","")
+tokens = expression_tokenizer(string)
+
+def unary_operators(tokens):
+    for index in range(len(tokens)):
+        if index == 0 and tokens[index] =="+":
+            tokens[index] = "u+"
+        elif index == 0 and tokens[index] =="-":
+            tokens[index] = "u-"
+        elif tokens[index-1] in ")+-/^*(" and tokens[index] =="+":
+            tokens[index] = "u+"
+        elif tokens[index-1] in ")+-/^*(" and tokens[index] =="-":
+            tokens[index] = "u-"
+    return tokens
+unary_operators(tokens)  
+
+#Exercise 131: Infix to Postfix
+
+def infix_to_postfix(infix):
+    operators = []
+    postfix = []
+    for token in infix:
+        if token.isdigit() == True:
+            postfix.append(token)
+        else:
+            if token=="(":
+                operators.append(token)
+            elif token == ")":
+                operator = operators.pop()
+                while operator != "(":
+                    postfix += operator
+                    operator = operators.pop()
+            else:
+                while operators != [] and precedence(token) < precedence(operators[-1]):
+                    postfix += operators.pop()
+                operators.append(token)
+
+    while operators != []:
+        postfix += operators.pop()
+    
+    for index, value in enumerate(postfix): #Cleaning up the postfix so that we can join u to + and u to -.
+        if postfix[index] == "u" and postfix[index+1]=="-":
+            postfix[index] = "u-"
+
+        elif postfix[index] == "-" and postfix[index-1] == "u-":
+            postfix.remove(postfix[index])
+
+        elif postfix[index] == "u" and postfix[index+1] == "+":       
+            postfix[index] = "u+"
+
+        elif postfix[index] == "+" and postfix[index-1] == "u+":
+            postfix.remove(postfix[index])       
+    return postfix
+
+#Testing each function starting with a mathematical expression inputted by a user:
+string = input("Enter a mathematical expression you want tokenized: ")
+tokens = expression_tokenizer(string)
+print(tokens)
+infix = unary_operators(tokens) 
+print(infix)
+postfix = infix_to_postfix(infix)
+print(postfix)
