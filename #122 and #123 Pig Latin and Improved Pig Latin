@@ -1,3 +1,27 @@
+#Exercise #122: Pig Latin
+
+def pig_latin(string):
+    new_string = ""
+    for word in string.split(" "):
+        term = ""
+        start = ""
+        if word[0] in "aeiou":
+            term += word + "way" 
+            new_string += term + " "
+        elif word[0] in "bcdfghjklmnpqrstvwxyz":
+            for letter in word:
+                if letter not in "aeiou":
+                    start += letter
+                else:
+                    break
+            term = word[word.index(letter): ] + start + "ay"
+            new_string += term + " "
+        else:
+            new_string += word + " "
+    return new_string       
+
+
+#Exercise #123: Improved Pig Latin
 def pig_latin_improved(string):
     new_string = ""
     for word in string.split(" "):
