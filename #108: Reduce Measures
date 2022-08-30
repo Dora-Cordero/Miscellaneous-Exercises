@@ -1,0 +1,43 @@
+#Exercise #108: Reduce Measures
+
+#1 cup = 16 tablespoons
+#1 tablespoon = 3 teaspoons
+
+def reduce_measures(units,unit_of_measure):
+    num_cup = 0
+    num_tablespoons = 0
+    num_teaspoons = 0
+
+    if unit_of_measure == "cup":
+        num_cup = units
+        print(f"{num_cup} cups, {num_tablespoons}, tablespoons, {num_teaspoons} teaspoons.")
+
+    elif unit_of_measure == "tablespoon" and units >= 16:
+        while units - 16 >= 0:
+            if units - 16 >= 0:
+                units -= 16 
+                num_cup +=1
+            else:
+                break
+        num_tablespoons = units
+        print(f"{num_cup} cups, {num_tablespoons}, tablespoons, {num_teaspoons} teaspoons.")
+
+    elif unit_of_measure == "teaspoon" and units >= 3:
+        num_teaspoons = volume
+        while num_teaspoons - 3 >= 0:
+            if num_teaspoons - 3 >= 0:
+                num_teaspoons -=3
+                num_tablespoons +=1
+            else:
+                break
+        while num_tablespoons - 16 >= 0:
+            if num_tablespoons - 16 >= 0:
+                num_tablespoons -=16
+                num_cup += 1
+            else:
+                break      
+        print(f"{num_cup} cups, {num_tablespoons}, tablespoons, {num_teaspoons} teaspoons.")
+
+units = int(input("Please enter the ingredient quantity: "))
+unit_of_measure = input("Please enter the unit of measure (cup, tablespoon or teaspoon): ")
+reduce_measures(units,unit_of_measure)
