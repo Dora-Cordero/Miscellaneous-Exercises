@@ -1,75 +1,27 @@
 #Exercise 65: Compute the Perimeter of a Polygon.
-"""
-Write a program that computes the perimeter of a polygon. Begin by reading the x
-and y values for the first point on the perimeter of the polygon from the user. Then
-continue reading pairs of x and y values until the user enters a blank line for the
-x-coordinate. Each time you read an additional coordinate you should compute the
-distance to the previous point and add it to the perimeter. When a blank line is entered
-for the x-coordinate your program should add the distance from the last point back
-to the first point to the perimeter. Then it should display the total perimeter. """ 
 
-x_values1=[]
-y_values1=[]
+x_coord = float(input("Enter the first x-coordinate: "))
+y_coord = float(input("Enter the first y-coordinate: "))
+x_coords = [x_coord]
+y_coords = [y_coord]
 
-count=0
-x = input("Enter the x part of the coordinate: ")
-x_values1.append(x)
-y = input("Enter the y part of the coordinate: ")
-while y==" ":
-    print("The y coordinate cannot be blank.")
-    y = input("Enter the y part of the coordinate: ")
-y_values1.append(y)
+dist = 0
+perimeter = 0
 
-while x != " ":
-    x = input("Enter the x part of the coordinate (blank to quit): ")
-    x_values1.append(x)
-    if x !=" ":
-        y = input("Enter the y part of the coordinate: ")
-        while y==" ":
-            print("The y coordinate cannot be blank.")
-            y = input("Enter the y part of the coordinate: ")
-        y_values1.append(y)
-x_values1.pop()
-x_values=[]
-y_values=[]
+while x_coord != " ":
+    x_coord = input("Enter the next x-coordinate (blank to quit): ")
+    if x_coord != " ":
+        x_coords.append(float(x_coord))
+        y_coord = float(input("Enter the next y-coordinate (blank to quit): "))
+        y_coords.append(y_coord)
+    else:
+        break
 
-for i in x_values1:
-    x_values.append(int(i))
-for i in y_values1:
-    y_values.append(int(i))
+coordinates = list(zip(x_coords,y_coords))
 
-distance_list=[]
-number_of_coordinates=len(x_values)
-
-if number_of_coordinates < 3:
-    print(" ")
-    print("The polygon must have at least 3 sides.")
-    x = input("Enter the x part of the coordinate (blank to quit): ")
-    x_values1.append(x)
-    y = input("Enter the y part of the coordinate: ")
-    y_values1.append(y)
-
-x_values1.pop()
-x_values=[]
-y_values=[]
-
-for i in x_values1:
-    x_values.append(int(i))
-for i in y_values1:
-    y_values.append(int(i))
-
-distance_list=[]
-number_of_coordinates=len(x_values)    
-    
-for i in range (0,number_of_coordinates-1):
-    down = x_values[i+1] - x_values[i]
-    up = y_values[i+1] - y_values[i]
-    distance=math.sqrt(up**2 + down**2)
-    distance_list.append(distance)
-down1 = x_values[-1] - x_values[0]
-up1 = y_values[-1] - y_values[0]
-distance=math.sqrt(up1**2 + down1**2)
-distance_list.append(distance)
-total_distance=round(math.fsum(distance_list),2)
-
-print("The perimeter of that polygon is",total_distance, ".")
+for index, pair in enumerate(coordinates):
+    x = coordinates[index][0] - coordinates[index-1][0]
+    y = coordinates[index][1] - coordinates[index-1][1]
+    dist = sqrt(x**2 + y**2)
+    perimeter += dist
+print(f"The perimeter of the polygon is: {perimeter}.")
