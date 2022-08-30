@@ -1,0 +1,39 @@
+#Exercise #141: Write out Numbers in English
+def number_to_english(number):
+    integer = str(number)
+    ones = {key: value for key, value in zip(range(0,10),["zero","one","two","three","four","five","six","seven","eight",
+                                                          "nine"])}
+    tens_1 = {key: value for key, value in zip(range(10,20),["ten","eleven","twelve","thirteen","forteen","fifteen",
+                                                             "sixteen", "seventeen","eighteen","nineteen"])}
+    tens_2_9 = {key: value for key, value in zip(range(2,10),["twenty","thirty","forty","fifty","sixty","seventy",
+                                                            "eighty","ninety"])}
+    if len(integer) == 1:
+        word_number = ""
+        word_number = ones[number]
+    elif len(integer) == 2:
+        word_number = ""
+        if number in tens_1:
+            word_number = tens_1[number]
+        else:
+            for index, num in enumerate(integer):
+                if index == 0:
+                    word_number += tens_2_9[int(num)]
+                elif index == 1 and num !="0":
+                    word_number += " "+ones[int(num)]
+    elif len(integer) == 3:
+        word_number = ""
+        for index, num in enumerate(integer):
+            if index == 0:
+                word_number += ones[int(num)] + " hundred "
+            elif index == 1:
+                if int(num) == 1:
+                    num = int(num + integer[2])
+                    word_number += tens_1[int(num)]
+                elif int(num) > 1:
+                    word_number += tens_2_9[int(num)]
+            elif index == 2:
+                if int(integer[index-1]) != 1 and int(integer[index]) != 0:
+                    word_number += ones[int(num)]
+    return word_number
+number = int(input("Write a number you want translated to english (0-999): "))
+number_to_english(number)
