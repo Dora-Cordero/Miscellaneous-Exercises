@@ -1,5 +1,5 @@
 #Shuffling a Deck of Cards:
-
+#Exercise number 125
 def createDeck(): #Creates a deck of 52 cards.
     deck = []
     for suit in ['♠','♥','♦','♣']:
@@ -21,6 +21,7 @@ print(f"Before shuffling:{createDeck()}\n\n",end= "")
 print(f"After shuffling:{shuffle_deck()}",end= "")
 
 #Card Dealer
+#Exercise number 126
 def card_dealer(num_hands,hands_size,deck): #Uses the previous functions to shuffle a deck of cards and deal it to players.
     deck = shuffle()
     cards_passed = []
