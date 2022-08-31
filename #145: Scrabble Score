@@ -1,0 +1,16 @@
+#Exercise # 145: Scrabble Score
+
+def scrabble_score(word):
+    letters = [["A","E","I","L","N","O","R","S","T","U"],["D","G"],["B","C","M","P"],["F","H","V","W","Y"], 
+               ["K"],["J","X"],["Q","Z"]]
+    points_letters = {key: value for key, value in zip(range(1,10),letters)}
+
+    points = []
+    for letter in word.upper():
+        for key, value in points_letters.items():
+            if letter in points_letters[key]:
+                points.append(key)
+    return sum(points)
+
+word = input("Enter a word to calculate your scrabble score: ")
+print(f"Your scrabble score for the word {word} is {scrabble_score(word)}")
