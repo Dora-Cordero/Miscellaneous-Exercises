@@ -1,0 +1,62 @@
+""" We all know the game hangman. It fills up our time when we don't know what to play with our friends. In my version of hangman, a player has as many
+chances as the length of the word. If they guess a letter incorrectly, they lose a chance, even if they've already guessed the incorrect letter 
+previously. At each iteration, the player is informed of how many chances they have left.
+The player can keep guessing until they either win the game, or lose all their chances, at which point a message appears with the word that was meant 
+to be guessed. """
+
+#Packages to import
+from urllib.request import urlopen
+import random
+
+#Reading the list of words from the website
+word_site = urlopen("https://www.mit.edu/~ecprice/wordlist.10000").read()
+WORDS = word_site.splitlines()
+
+play_again = "y"
+
+while play_again == "y":
+    count = 0
+    print("Let's play hangman!")
+    word_to_guess = "".join([chr(word) for word in random.choice(WORDS)])
+    chances = len(word_to_guess)
+    print(f"You have {chances} chances this round.")
+    blanks = [[letter,"_"] for letter in word_to_guess]
+    
+    show_to_user = " ".join([pair[1] for pair in blanks])
+    print(show_to_user)
+
+    letters_guessed = []
+    
+    letter = input("Guess a letter: ").lower()
+    letters_guessed.append(letter)
+    
+        
+    while chances > 0:
+        for pair in blanks:
+            for index, element in enumerate(pair):
+                if index == 0 and element == letter:
+                    pair[1] = letter
+                    count +=1
+        if count == 0:
+            chances -=1
+        count = 0
+        if all(pair[1] != "_" for pair in blanks) and chances != 0:
+            show_to_user = " ".join([pair[1] for pair in blanks])
+            print(show_to_user)
+            print("\nCongratulations, you win!")
+            chances = 0
+            play_again = input("\nDo you want to play again? (y/n)").strip()
+        else:
+            if chances == 0:
+                print(f"\nYou lose! The word was: {word_to_guess}.")
+                play_again = input("\nDo you want to play again? (y/n) ").strip()
+            else:
+                print(f"You have {chances} chances left.")
+                show_to_user = " ".join([pair[1] for pair in blanks])
+                print(show_to_user)
+                letter = input("Guess a letter: ")
+                if letter not in letters_guessed: 
+                    letters_guessed.append(letter)
+                else:
+                    print("You already guessed this letter. Try a different one!")
+print("Good bye!")
